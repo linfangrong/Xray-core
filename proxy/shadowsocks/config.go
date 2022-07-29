@@ -67,6 +67,8 @@ func createXChaCha20Poly1305(key []byte) cipher.AEAD {
 
 func (a *Account) getCipher() (Cipher, error) {
 	switch a.CipherType {
+	case CipherType_AES_256_CFB:
+		return &AesCfb{KeyBytes: 32}, nil
 	case CipherType_AES_128_GCM:
 		return &AEADCipher{
 			KeyBytes:        16,
