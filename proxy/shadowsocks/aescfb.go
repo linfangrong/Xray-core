@@ -5,6 +5,7 @@ import (
 
 	"github.com/xtls/xray-core/common/buf"
 	"github.com/xtls/xray-core/common/crypto"
+	"github.com/xtls/xray-core/common/errors"
 )
 
 // AesCfb represents all AES-CFB ciphers.
@@ -45,7 +46,7 @@ func (v *AesCfb) EncodePacket(key []byte, b *buf.Buffer) error {
 
 func (v *AesCfb) DecodePacket(key []byte, b *buf.Buffer) error {
 	if b.Len() <= v.IVSize() {
-		return newError("insufficient data: ", b.Len())
+		return errors.New("insufficient data: ", b.Len())
 	}
 	iv := b.BytesTo(v.IVSize())
 	stream := crypto.NewAesDecryptionStream(key, iv)
